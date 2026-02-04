@@ -40,6 +40,12 @@ namespace Wanted
 		// 전역 접근 함수.
 		static Engine& Get();
 
+		// 화면 너비 반환 함수.
+		inline int GetWidth() const { return setting.width; }
+
+		// 화면 높이 반환 함수.
+		inline int GetHeight() const { return setting.height; }
+
 	protected:
 
 		// 정리 함수.

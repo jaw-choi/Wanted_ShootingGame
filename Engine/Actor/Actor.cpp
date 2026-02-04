@@ -14,9 +14,9 @@ namespace Wanted
 		: position(position), color(color)
 	{
 		// 문자열 복사.
-		size_t length = strlen(image) + 1;
-		this->image = new char[length];
-		strcpy_s(this->image, length, image);
+		width = static_cast<int>(strlen(image));
+		this->image = new char[width + 1];
+		strcpy_s(this->image, width + 1, image);
 	}
 
 	Actor::~Actor()
