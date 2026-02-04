@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Actor/Actor.h"
 
@@ -15,11 +15,14 @@ public:
 private:
 	virtual void Tick(float deltaTime) override;
 
-	// ¿À¸¥ÂÊÀ¸·Î ÀÌµ¿ÇÏ´Â ÇÔ¼ö.
+	// ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì´ë™í•˜ëŠ” í•¨ìˆ˜.
 	void MoveRight();
 	
-	// ¿ŞÂÊÀ¸·Î ÀÌµ¿ÇÏ´Â ÇÔ¼ö.
+	// ì™¼ìª½ìœ¼ë¡œ ì´ë™í•˜ëŠ” í•¨ìˆ˜.
 	void MoveLeft();
+
+	// íƒ„ì•½ ë°œì‚¬ í•¨ìˆ˜.
+	void Fire();
 
 private:
 

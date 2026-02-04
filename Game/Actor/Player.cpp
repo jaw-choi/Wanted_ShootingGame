@@ -1,14 +1,17 @@
-#include "Player.h"
+ï»¿#include "Player.h"
+#include "Actor/PlayerBullet.h"
 #include "Core/Input.h"
 #include "Engine/Engine.h"
+#include "Level/Level.h"
+
 
 Player::Player()
-	: super("<=A=>", Vector2::Zero, Color::Green)
+    : super("<=A=>", Vector2::Zero, Color::Green)
 {
-	// »ı¼º À§Ä¡ ¼³Á¤.
-	int xPosition = (Engine::Get().GetWidth() / 2) - (width / 2);
-	int yPosition = Engine::Get().GetHeight() - 2;
-	SetPosition(Vector2(xPosition, yPosition));
+    // ìƒì„± ìœ„ì¹˜ ì„¤ì •.
+    int xPosition = (Engine::Get().GetWidth() / 2) - (width / 2);
+    int yPosition = Engine::Get().GetHeight() - 2;
+    SetPosition(Vector2(xPosition, yPosition));
 }
 
 Player::~Player()
@@ -17,40 +20,58 @@ Player::~Player()
 
 void Player::Tick(float deltaTime)
 {
-	super::Tick(deltaTime);
+    super::Tick(deltaTime);
+    
+    // ì¢…ë£Œ ì²˜ë¦¬.
+    if (Input::Get().GetKey(VK_ESCAPE))
+    {
+        QuitGame();
+    }
 
-	// ÁÂ¿ì ¹æÇâÅ° ÀÔ·ÂÃ³¸®.
-	if (Input::Get().GetKey(VK_LEFT))
-	{
-		MoveLeft();
-	}
-	if (Input::Get().GetKey(VK_RIGHT))
-	{
-		MoveRight();
-	}
+    // ì¢Œìš° ë°©í–¥í‚¤ ì…ë ¥ì²˜ë¦¬.
+    if (Input::Get().GetKey(VK_LEFT))
+    {
+        MoveLeft();
+    }
+    if (Input::Get().GetKey(VK_RIGHT))
+    {
+        MoveRight();
+    }
+    if (Input::Get().GetKey(VK_SPACE))
+    {
+        Fire(); 
+    }
 }
 
 void Player::MoveRight()
 {
-	// ¿À¸¥ÂÊ ÀÌµ¿ Ã³¸®.
-	position.x += 1;
+    // ì˜¤ë¥¸ìª½ ì´ë™ ì²˜ë¦¬.
+    position.x += 1;
 
-	// ÁÂÇ¥ °Ë»ç.
-	// "<-=A=->"
-	if (position.x + width > Engine::Get().GetWidth())
-	{
-		position.x -= 1;
-	}
+    // ì¢Œí‘œ ê²€ì‚¬.
+    // "<-=A=->"
+    if (position.x + width > Engine::Get().GetWidth())
+    {
+        position.x -= 1;
+    }
 }
 
 void Player::MoveLeft()
 {
-	// ¿ŞÂÊ ÀÌµ¿ Ã³¸®.
-	position.x -= 1;
+    // ì™¼ìª½ ì´ë™ ì²˜ë¦¬.
+    position.x -= 1;
 
-	// ÁÂÇ¥ °Ë»ç.
-	if (position.x < 0)
-	{
-		position.x = 0;
-	}
+    // ì¢Œí‘œ ê²€ì‚¬.
+    if (position.x < 0)
+    {
+        position.x = 0;
+    }
+}
+
+void Player::Fire()
+{
+    // ìœ„ì¹˜ ì„¤ì •.
+    Vector2 bulletPosition(position.x + width / 2, position.y);
+    // ì•¡í„° ì„¤ì •.
+    GetOwner()->AddNewActor(new PlayerBullet(bulletPosition));
 }

@@ -1,6 +1,7 @@
-#include "Actor.h"
+ï»¿#include "Actor.h"
 #include "Util/Util.h"
 #include "Render/Renderer.h"
+#include "Engine/Engine.h"
 
 #include <iostream>
 #include <Windows.h>
@@ -13,7 +14,7 @@ namespace Wanted
 		Color color)
 		: position(position), color(color)
 	{
-		// ¹®ÀÚ¿­ º¹»ç.
+		// ë¬¸ìì—´ ë³µì‚¬.
 		width = static_cast<int>(strlen(image));
 		this->image = new char[width + 1];
 		strcpy_s(this->image, width + 1, image);
@@ -21,13 +22,13 @@ namespace Wanted
 
 	Actor::~Actor()
 	{
-		// ¸Ş¸ğ¸® ÇØÁ¦.
+		// ë©”ëª¨ë¦¬ í•´ì œ.
 		SafeDeleteArray(image);
 	}
 
 	void Actor::BeginPlay()
 	{
-		// ÀÌº¥Æ®¸¦ ¹ŞÀº ÈÄ¿¡´Â ÇÃ·¡±× ¼³Á¤.
+		// ì´ë²¤íŠ¸ë¥¼ ë°›ì€ í›„ì—ëŠ” í”Œë˜ê·¸ ì„¤ì •.
 		hasBeganPlay = true;
 	}
 
@@ -39,22 +40,38 @@ namespace Wanted
 	{
 		//Renderer::Draw(position, color, image);
 
-		// ·»´õ·¯¿¡ µ¥ÀÌÅÍ Á¦Ãâ.
+		// ë Œë”ëŸ¬ì— ë°ì´í„° ì œì¶œ.
 		Renderer::Get().Submit(image, position, color, sortingOrder);
+	}
+
+	void Actor::Destroy()
+	{
+	    destroyRequested = true;
+
+	    OnDestory();
+	}
+
+	void Actor::OnDestory()
+	{
+	}
+
+	void Actor::QuitGame()
+	{
+	    Engine::Get().QuitEngine();
 	}
 
 	void Actor::SetPosition(const Vector2& newPosition)
 	{
-		// ·»´õ·¯¿¡ ºóÄ­ ±×¸®±â ¿äÃ».
+		// ë Œë”ëŸ¬ì— ë¹ˆì¹¸ ê·¸ë¦¬ê¸° ìš”ì²­.
 		//Renderer::Draw(position, ' ');
 
-		// º¯°æÇÏ·Á´Â À§Ä¡°¡ ÇöÀç À§Ä¡¿Í °°À¸¸é °Ç³Ê²ñ.
+		// ë³€ê²½í•˜ë ¤ëŠ” ìœ„ì¹˜ê°€ í˜„ì¬ ìœ„ì¹˜ì™€ ê°™ìœ¼ë©´ ê±´ë„ˆë€œ.
 		if (position == newPosition)
 		{
 			return;
 		}
 
-		// »õ·Î¿î À§Ä¡ ¼³Á¤.
+		// ìƒˆë¡œìš´ ìœ„ì¹˜ ì„¤ì •.
 		position = newPosition;
 	}
 }
