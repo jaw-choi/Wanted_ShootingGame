@@ -1,14 +1,15 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Math/Vector2.h"
 #include "Math/Color.h"
+#include <time.h>
 
 using namespace Wanted;
 
-// ÇïÆÛ(Helper) ±â´É Á¦°ø.
+// í—¬í¼(Helper) ê¸°ëŠ¥ ì œê³µ.
 namespace Util
 {
-	// ÄÜ¼Ö Ä¿¼­ À§Ä¡ ÀÌµ¿(¼³Á¤)ÇÏ´Â ÇÔ¼ö.
+	// ì½˜ì†” ì»¤ì„œ ìœ„ì¹˜ ì´ë™(ì„¤ì •)í•˜ëŠ” í•¨ìˆ˜.
 	inline void SetConsolePosition(const Vector2& position)
 	{
 		SetConsoleCursorPosition(
@@ -17,7 +18,7 @@ namespace Util
 		);
 	}
 
-	// ÄÜ¼Ö ÅØ½ºÆ® ¼³Á¤ ÇÔ¼ö.
+	// ì½˜ì†” í…ìŠ¤íŠ¸ ì„¤ì • í•¨ìˆ˜.
 	inline void SetConsoleTextColor(Color color)
 	{
 		SetConsoleTextAttribute(
@@ -26,10 +27,10 @@ namespace Util
 		);
 	}
 
-	// Ä¿¼­ ²ô±â.
+	// ì»¤ì„œ ë„ê¸°.
 	inline void TurnOffCursor()
 	{
-		// Ä¿¼­ ²ô±â.
+		// ì»¤ì„œ ë„ê¸°.
 		CONSOLE_CURSOR_INFO info = {};
 		GetConsoleCursorInfo(
 			GetStdHandle(STD_OUTPUT_HANDLE),
@@ -43,10 +44,10 @@ namespace Util
 		);
 	}
 
-	// Ä¿¼­ ÄÑ±â.
+	// ì»¤ì„œ ì¼œê¸°.
 	inline void TurnOnCursor()
 	{
-		// Ä¿¼­ ²ô±â.
+		// ì»¤ì„œ ë„ê¸°.
 		CONSOLE_CURSOR_INFO info = {};
 		GetConsoleCursorInfo(
 			GetStdHandle(STD_OUTPUT_HANDLE),
@@ -59,9 +60,35 @@ namespace Util
 			&info
 		);
 	}
+
+	inline void SetRandomSeed()
+	{
+	    // ì‹œê°„ ê°’ì„ ëœë¤ ì¢…ìê°’ìœ¼ë¡œ ì„¤ì •.
+	    srand(static_cast<unsigned int>(time(nullptr)));
+	}
+
+	// ì •ìˆ˜ ë‚œìˆ˜ í•¨ìˆ˜.
+	inline int Random(int min, int max)
+	{
+	    int diff = (max - min) + 1;
+	    return ((diff * rand()) / (RAND_MAX + 1)) + min;
+	}
+
+	// ë¶€ë™ì†Œìˆ˜ì  ë‚œìˆ˜ í•¨ìˆ˜.
+	inline float RandomRange(float min, float max)
+	{
+	    // 0~1ì‚¬ì´ì˜ float ê¸°ë°˜ ëœë¤ ê°’.
+	    float random
+		= static_cast<float>(rand())
+		/ static_cast<float>(RAND_MAX);
+
+	    float diff = (max - min);
+	    return (random * diff) + min;
+	}
+
 }
 
-// ¸Ş¸ğ¸® Á¤¸® ÇÔ¼ö.
+// ë©”ëª¨ë¦¬ ì •ë¦¬ í•¨ìˆ˜.
 template<typename T>
 void SafeDelete(T*& t)
 {

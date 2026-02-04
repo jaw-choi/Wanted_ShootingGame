@@ -1,10 +1,14 @@
-#include "GameLevel.h"
+ï»¿#include "GameLevel.h"
 #include "Actor/Player.h"
+#include "Actor/EnemySpawner.h"
 
 GameLevel::GameLevel()
 {
-	// Player ¾×ÅÍ Ãß°¡.
+	// Player ì•¡í„° ì¶”ê°€.
 	AddNewActor(new Player());
+
+	// Enemy ì•¡í„° ì¶”ê°€.
+	AddNewActor(new EnemySpawner());
 }
 
 GameLevel::~GameLevel()
